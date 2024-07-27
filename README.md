@@ -62,16 +62,21 @@ To get started with this project, follow these steps:
 
 5. **Install Docker:**
 
+    We will use Docker to run a ChromaDB instance. so you need to install docker, docker-compose.
+
     Follow the instructions on the [Official Docker website, Install Docker Engine](https://docs.docker.com/engine/install/) to install Docker on your machine.
 
-    We will use Docker to run a PostgreSQL instance with the pgvector extension.
+    Follow the instructions on the [Official Docker website, Install Docker Compose](https://docs.docker.com/compose/install/) to install Docker Compose on your machine.
 
-6. **Run PostgreSQL with pgvector:**
+6. **Run ChromaDB for Vector Search**
 
-    Run a PostgreSQL instance with pgvector extension using Docker:
+    Run a ChromaDB instance using docker-compose:
 
     ```sh
-    docker run --name pgvector -e POSTGRES_PASSWORD=postgres -p 5433:5432 -h localhost -d pgvector/pgvector:pg15
+    git clone https://github.com/chroma-core/chroma
+
+    docker-compose up -d # start the ChromaDB instance
+    docker-compose down  # stop the ChromaDB instance
     ```
 
 ## Usage

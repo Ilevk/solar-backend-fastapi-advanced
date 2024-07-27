@@ -31,6 +31,6 @@ async def chat(chat_request: ChatRequest, chat_service: ChatService = Depends(Se
             content=response,
             media_type="text/event-stream")
     else:
-        response = await chat_service.chat(messages=chat_request.messages, model=chat_request.model)
+        response = await chat_service.chat(messages=chat_request.messages, model=chat_request.model.value)
 
         return ChatResponse(data=response).model_dump()

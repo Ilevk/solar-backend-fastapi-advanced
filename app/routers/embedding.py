@@ -42,3 +42,5 @@ async def embeddings_passage(embedding_request: PassageQueryEmbeddingRequest, ch
     response = await chat_service.embeddings(messages=embedding_request.messages, model=embedding_request.model.value)
 
     return EmbeddingResponse(data=response).model_dump()
+
+# @router.post("/embeddings/pdf", response_model=EmbeddingResponse, responses={400: {"model": ErrorResponse}})

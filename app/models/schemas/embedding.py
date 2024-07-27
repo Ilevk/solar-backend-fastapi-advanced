@@ -2,6 +2,7 @@ from typing import List
 from pydantic import BaseModel, Field
 
 from app.models.constant import EmbeddingModel
+from app.models.schemas import BaseResponse
 
 class EmbeddingRequest(BaseModel):
     messages: List[str] = Field(..., description="Input text")
@@ -17,7 +18,5 @@ class EmbeddingResult(BaseModel):
     index: int = Field(..., description="Index")
     embedding: List[float] = Field(..., description="Embedding")
 
-class EmbeddingResponse(BaseModel):
-    message: str = Field("OK", description="Message")
-    statusCode: str = Field("200", description="Status code")
+class EmbeddingResponse(BaseResponse):
     data: List[EmbeddingResult] = Field(..., description="Embedding response")

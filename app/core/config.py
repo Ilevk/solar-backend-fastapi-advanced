@@ -17,6 +17,9 @@ class Config(BaseSettings):
 
     API_KEY: str
 
+    CHROMA_HOST: str = "localhost"
+    CHROMA_PORT: int = 8000
+
     @property
     def fastapi_kwargs(self) -> Dict[str, Any]:
         return {

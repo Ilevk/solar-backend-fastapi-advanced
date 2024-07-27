@@ -1,13 +1,15 @@
-from typing import List, Dict, AsyncGenerator
+from typing import List, Dict, AsyncGenerator, Optional
 
 from app.clients import OpenAIClient
+from app.models.schemas import EmbeddingContextList
+from app.core.logger import logger
 
 class ChatService:
 
     def __init__(self, open_ai_client: OpenAIClient):
         self.open_ai_client = open_ai_client
 
-    def get_message(self, messages: str) -> List[Dict[str, str]]:
+    def get_message(self, messages: str, contexts: Optional[EmbeddingContextList],  ) -> List[Dict[str, str]]:
         """
         Generate message for chat
 
@@ -17,6 +19,11 @@ class ChatService:
         Returns:
             List[Dict[str, str]]: List of messages
         """
+        if contexts:
+            contexts = [f"Context: {'\n'.join([context.text for context in contexts.context])}"]
+            messages = contexts + messages
+            logger.info(contexts)
+
         message=[
             {
                 "role": "system",
@@ -30,7 +37,7 @@ class ChatService:
 
         return message
 
-    async def chat(self, messages: List[str], model: str='solar-1-mini-chat') -> str:
+    async def chat(self, messages: List[str], contexts: Optional[EmbeddingContextList],  model: str='solar-1-mini-chat') -> str:
         """
         Request completion from OpenAI API
         If you want to add extra logic, you can add it here. e.g. filtering, validation, rag, etc.
@@ -42,11 +49,11 @@ class ChatService:
         Returns:
             str: Completion response
         """
-        response = await self.open_ai_client.generate(messages=self.get_message(messages), model=model)
+        response = await self.open_ai_client.generate(messages=self.get_message(messages, contexts), model=model)
 
         return response
 
-    async def stream_chat(self, messages: List[str], model: str='solar-1-mini-chat') -> AsyncGenerator:
+    async def stream_chat(self, messages: List[str], contexts: Optional[EmbeddingContextList],  model: str='solar-1-mini-chat') -> AsyncGenerator:
         """
         Request stream completion from OpenAI API
         If you want to add extra logic, you can add it here. e.g. filtering, validation, rag, etc.
@@ -59,6 +66,6 @@ class ChatService:
             AsyncGenerator: Stream completion response
         """
 
-        response = self.open_ai_client.stream_generate(messages=self.get_message(messages), model=model)
+        response = self.open_ai_client.stream_generate(messages=self.get_message(messages, contexts), model=model)
 
         return response

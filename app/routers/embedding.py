@@ -25,7 +25,7 @@ async def embeddings_query(embedding_request: UserQueryEmbeddingRequest, embeddi
         EmbeddingResponse: Embedding response
     """
 
-    result = await embedding_serivce.embeddings(messages=embedding_request.messages, model=embedding_request.model.value)
+    result = await embedding_serivce._embeddings(messages=embedding_request.messages, model=embedding_request.model.value)
 
     return EmbeddingResponse(data=result).model_dump()
 
@@ -41,7 +41,7 @@ async def embeddings_passage(embedding_request: PassageQueryEmbeddingRequest, em
         EmbeddingResponse: Embedding response
     """
 
-    result = await embedding_serivce.embeddings(messages=embedding_request.messages, model=embedding_request.model.value)
+    result = await embedding_serivce._embeddings(messages=embedding_request.messages, model=embedding_request.model.value)
 
     return EmbeddingResponse(data=result).model_dump()
 

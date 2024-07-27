@@ -8,6 +8,7 @@ class ChatRequest(BaseModel):
     messages: List[str] = Field(..., description="List of messages")
     model: ChatModel = Field(..., description="Model name")
     stream: bool = Field(False, description="Stream completion")
+    rag: bool = Field(False, description="Rag completion")
 
 class ChatResponse(BaseResponse):
     data: str = Field(None, description="Completion response")

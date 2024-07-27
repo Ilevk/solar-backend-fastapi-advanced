@@ -20,3 +20,9 @@ class EmbeddingResult(BaseModel):
 
 class EmbeddingResponse(BaseResponse):
     data: List[EmbeddingResult] = Field(..., description="Embedding response")
+
+class EmbeddingContext(BaseModel):
+    text: str = Field(..., description="Text")
+
+class EmbeddingContextList(BaseModel):
+    context: List[EmbeddingContext] = Field(..., description="Context")

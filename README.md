@@ -1,6 +1,7 @@
-# Solar Backend FastAPI
+# Solar Backend FastAPI Advanced
 
-Welcome to the Solar Backend FastAPI project! This project is designed to provide backend services for a LLM chat application using Solar API.
+Welcome to the Solar Backend FastAPI project! This project is designed to provide backend services for a LLM chat application using Upstage Solar API.
+This repository contains simple RAGs for using the Layout Analysis, Embedding, and Chat features of the Upstage API.
 
 ## Table of Contents
 
@@ -33,8 +34,8 @@ To get started with this project, follow these steps:
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/ilevk/solar-backend-fastapi.git
-    cd solar-backend-fastapi
+    git clone https://github.com/ilevk/solar-backend-fastapi-advanced.git
+    cd solar-backend-fastapi-advanced
     ```
 
 2. **Set up a virtual environment:**

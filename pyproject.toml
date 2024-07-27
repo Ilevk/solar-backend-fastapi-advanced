@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "solar-backend-fastapi"
+name = "solar-backend-fastapi-advanced"
 version = "0.1.0"
 description = ""
 authors = ["ilevk <kcs93023@gmail.com>"]

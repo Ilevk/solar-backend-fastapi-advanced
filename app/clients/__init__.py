@@ -6,7 +6,7 @@ from retry import retry
 from app.core.logger import logger
 from app.core.errors.error import OpenAIException
 from app.core.config import config
-from app.models.schemas.embedding import EmbeddingResult
+from app.models.schemas import EmbeddingResult
 
 class OpenAIClient:
     def __init__(self, base_url: str):

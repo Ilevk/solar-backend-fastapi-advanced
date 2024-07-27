@@ -1,7 +1,9 @@
 from fastapi import APIRouter
 
 from app.routers.chat import router as chat_router
+from app.routers.embedding import router as embedding_router
 
-router = APIRouter()
+v1_router = APIRouter(prefix="/api/v1")
 
-router.include_router(chat_router, tags=["chat"])
+v1_router.include_router(chat_router, tags=["chat"])
+v1_router.include_router(embedding_router, tags=["embedding"])

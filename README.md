@@ -60,6 +60,20 @@ To get started with this project, follow these steps:
     OPENAI_API_KEY=your_openai_api_key
     ```
 
+5. **Install Docker:**
+
+    Follow the instructions on the [Official Docker website, Install Docker Engine](https://docs.docker.com/engine/install/) to install Docker on your machine.
+
+    We will use Docker to run a PostgreSQL instance with the pgvector extension.
+
+6. **Run PostgreSQL with pgvector:**
+
+    Run a PostgreSQL instance with pgvector extension using Docker:
+
+    ```sh
+    docker run --name pgvector -e POSTGRES_PASSWORD=postgres -p 5433:5432 -h localhost -d pgvector/pgvector:pg15
+    ```
+
 ## Usage
 
 To run the application, use the following command:

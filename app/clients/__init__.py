@@ -1,4 +1,4 @@
-from typing import AsyncGenerator
+from typing import AsyncGenerator, List
 
 from openai import AsyncOpenAI, APIConnectionError
 from retry import retry
@@ -6,6 +6,7 @@ from retry import retry
 from app.core.logger import logger
 from app.core.errors.error import OpenAIException
 from app.core.config import config
+from app.models.schemas.embedding import EmbeddingResult
 
 class OpenAIClient:
     def __init__(self, base_url: str):
@@ -15,7 +16,22 @@ class OpenAIClient:
         )
 
     @retry(tries=5, delay=1, backoff=2, exceptions=APIConnectionError)
-    async def generate(self, messages: str, model: str = "solar-1-mini-chat", **kwargs) -> str:
+    async def embeddings(self, messages: List[str], model: str = "solar-embedding-1-large-query", **kwargs) -> List[EmbeddingResult]:
+        logger.info(f"Generating embeddings for text: {messages}, model: {model}")
+        try:
+            response = await self.client.embeddings.create(
+                model=model,
+                input=messages,
+                **kwargs,
+            )
+
+            return [EmbeddingResult(**data.model_dump()) for data in response.data]
+        except Exception as e:
+            logger.error(e)
+            raise OpenAIException(f"Embedding failed: {e}")
+
+    @retry(tries=5, delay=1, backoff=2, exceptions=APIConnectionError)
+    async def generate(self, messages: List[str], model: str = "solar-1-mini-chat", **kwargs) -> str:
         logger.info(f"Generating completion for message: {messages}, model: {model}")
         try:
             response = await self.client.chat.completions.create(
@@ -31,7 +47,7 @@ class OpenAIClient:
             raise OpenAIException(f"Completion failed: {e}")
 
     @retry(tries=5, delay=1, backoff=2, exceptions=APIConnectionError)
-    async def stream_generate(self, messages: str, model: str = "solar-1-mini-chat", **kwargs) -> AsyncGenerator[str, None]:
+    async def stream_generate(self, messages: List[str], model: str = "solar-1-mini-chat", **kwargs) -> AsyncGenerator[str, None]:
         logger.info(f"Generating stream completion for messages: {messages}, model: {model}")
         try:
             response = await self.client.chat.completions.create(

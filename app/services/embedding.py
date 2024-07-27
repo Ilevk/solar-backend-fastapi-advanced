@@ -1,12 +1,16 @@
+import asyncio
 from typing import List
 
-from app.clients import OpenAIClient
-from app.models.schemas import EmbeddingResult
+from fastapi import UploadFile
+
+from app.clients import OpenAIClient, UpstageClient
+from app.models.schemas import EmbeddingResult, LayoutAnalysisResult
 
 class EmbeddingService:
 
-    def __init__(self, client: OpenAIClient):
-        self.client = client
+    def __init__(self, open_ai_client: OpenAIClient, upstage_client: UpstageClient):
+        self.open_ai_client = open_ai_client
+        self.upstage_client = upstage_client
 
     async def embeddings(self, messages: List[str], model: str='solar-embedding-1-large-query') -> List[EmbeddingResult]:
         """
@@ -20,6 +24,32 @@ class EmbeddingService:
         Returns:
             List[float]: Embedding response
         """
-        response = await self.client.embeddings(messages=messages, model=model)
+        result = await self.open_ai_client.embeddings(messages=messages, model=model)
 
-        return response
+        return result
+
+    async def pdf_embeddings(self, file: UploadFile) -> List[EmbeddingResult]:
+        """
+        Request embeddings from OpenAI API for PDF file
+
+        Args:
+            file (UploadFile): PDF file
+
+        Returns:
+            List[float]: Embedding response
+        """
+
+        la_result: LayoutAnalysisResult = await self.upstage_client.layout_analysis(file=file.file)
+
+        messages = [element.text for element in la_result.elements if element.text and len(element.text) > 10]
+
+        # Get embeddings for each text element by maxiumum 100 elenments
+        embedding = await asyncio.gather(
+            *[self.open_ai_client.embeddings(messages=messages[i:i+100]) for i in range(0, len(messages), 100)]
+        )
+
+        result = []
+        for emb in embedding:
+            result.extend(emb)
+
+        return result

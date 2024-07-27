@@ -4,8 +4,8 @@ from app.clients import OpenAIClient
 
 class ChatService:
 
-    def __init__(self, client: OpenAIClient):
-        self.client = client
+    def __init__(self, open_ai_client: OpenAIClient):
+        self.open_ai_client = open_ai_client
 
     def get_message(self, messages: str) -> List[Dict[str, str]]:
         """
@@ -42,7 +42,7 @@ class ChatService:
         Returns:
             str: Completion response
         """
-        response = await self.client.generate(messages=self.get_message(messages), model=model)
+        response = await self.open_ai_client.generate(messages=self.get_message(messages), model=model)
 
         return response
 
@@ -59,6 +59,6 @@ class ChatService:
             AsyncGenerator: Stream completion response
         """
 
-        response = self.client.stream_generate(messages=self.get_message(messages), model=model)
+        response = self.open_ai_client.stream_generate(messages=self.get_message(messages), model=model)
 
         return response

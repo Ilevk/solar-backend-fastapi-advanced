@@ -15,7 +15,7 @@ class Config(BaseSettings):
 
     LOG_LEVEL: int = logging.INFO
 
-    OPENAI_API_KEY: str
+    API_KEY: str
 
     @property
     def fastapi_kwargs(self) -> Dict[str, Any]:

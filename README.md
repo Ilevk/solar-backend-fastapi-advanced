@@ -1,6 +1,9 @@
 # Solar Backend FastAPI Advanced
 
-Welcome to the Solar Backend FastAPI project! This project is designed to provide backend services for a LLM chat application using Upstage Solar API.
+Welcome to the Solar Backend FastAPI project!
+
+This project is designed to provide backend services for a LLM chat application using Upstage Solar API.
+
 This repository contains simple RAGs for using the Layout Analysis, Embedding, and Chat features of the Upstage API.
 
 ## Table of Contents

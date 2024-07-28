@@ -1,4 +1,4 @@
 export env=local
-export openai_api_key={your_openai_api_key}
+export api_key={your_upstage_api_key}
 
 uvicorn app.main:app --reload

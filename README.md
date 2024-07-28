@@ -19,7 +19,9 @@ This is an example project for developing an Upstage Solar API service based on 
 ## Features
 
 - FastAPI for building APIs
-- Integration with OpenAI for using Upstage Solar API
+- Integration with OpenAI for using Upstage API
+- Embedding and Layout Analysis
+- RAG for Chat API
 - Configuration management
 - Error handling and logging
 - Modular structure for scalability
@@ -90,20 +92,26 @@ Here is an overview of the project structure:
 
 ```
 .
-├── app
-│   ├── clients
+├── app/
+│   ├── clients/
 │   │   ├── open_ai.py
 │   │   └── upstage.py
-│   ├── core
+│   ├── core/
+│   │   ├── errors/
 │   │   ├── config.py
 │   │   └── db.py
-│   ├── models
-│   │   └── schemas
-│   │       └── document.py
-│   ├── routers
-│   ├── services
-│   │   └── embedding.py
+│   │   ├── dependencies.py
+│   │   ├── lifespan.py
+│   │   ├── logger.py
+│   ├── models/
+│   │   └── schemas/
+│   ├── routers/
+│   ├── services/
+│   │   ├── chat.py
+│   │   ├── embedding.py
+│   │   └── service_factory.py
 │   └── main.py
+├── .gitignore
 ├── .pre-commit-config.yaml
 ├── LICENSE
 ├── poetry.lock
@@ -126,8 +134,8 @@ This directory contains the main application code.
   Contains core functionalities and configurations.
   - `errors`: Custom error classes and handlers.
   - `config.py`: Configuration settings for the application, including environment variables.
-  - `dependencies.py`: Dependency injection for FastAPI.
   - `db.py`: ChromaDB connection and setup.
+  - `dependencies.py`: Dependency injection for FastAPI.
   - `lifespan.py`: Application lifecycle events, such as startup and shutdown.
   - `logger.py`: Setup for logging.
 
@@ -142,8 +150,8 @@ This directory contains the main application code.
 
 - ### services
   Contains business logic and service classes.
-  - `embedding.py`: Services related to embedding operations.
   - `chat.py`: Services related to chat operations.
+  - `embedding.py`: Services related to embedding operations.
   - `service_factory.py`: Factory class for creating service instances.
 
 - `main.py`: The entry point of the application. It initializes the FastAPI app and includes the application lifecycle events.

@@ -10,9 +10,6 @@ This repository contains simple RAGs for using the Layout Analysis, Embedding, a
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
-- [Configuration](#configuration)
-- [Running Tests](#running-tests)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Introduction
@@ -58,7 +55,7 @@ To get started with this project, follow these steps:
     Create a `.env` file in the root directory and add the necessary environment variables. For example:
 
     ```env
-    OPENAI_API_KEY=your_openai_api_key
+    API_KEY=your_upstage_api_key
     ```
 
 5. **Install Docker:**
@@ -153,13 +150,6 @@ This directory contains the main application code.
 
 ## Configuration
 Configuration is managed using environment variables. You can set these variables in a .env file in the root directory.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
-
-## Configuration
-Configuration is managed using environment variables. You can set these variables in a .env file in the root directory.
-
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for more details.

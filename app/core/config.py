@@ -8,7 +8,7 @@ class Config(BaseSettings):
     ENV: str = "local"
     TITLE: str = "Solar FastAPI Example"
     VERSION: str = "0.1.0"
-    APP_HOST: str = "http://localhost:8000"
+    APP_HOST: str = "http://localhost:8080"
     OPENAPI_URL: str = "/openapi.json"
     DOCS_URL: str = "/docs"
     REDOC_URL: str = "/redoc"

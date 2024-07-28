@@ -94,7 +94,7 @@ $ uvicorn app.main:app --host {host} --port {port}
 Here is an overview of the project structure:
 
 ```
-.
+solar-backend-fastapi-advanced/
 ├── app/
 │   ├── clients/
 │   │   ├── open_ai.py

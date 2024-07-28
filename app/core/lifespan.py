@@ -10,11 +10,12 @@ async def lifespan(app: FastAPI):
     try:
         logger.info("Starting FastAPI application")
         async with get_chrome_client() as client:
-            logger.info("Connected to Chroma")
             try:
-                await client.create_collection(name="embeddings")
+                await client.heartbeat()
             except Exception as e:
-                logger.info(f"embedding collection already exists: {e}")
+                logger.error(f"Failed to ping Chroma: {e}")
+                raise
+            logger.info("Chroma is ready")
 
         yield
     finally:

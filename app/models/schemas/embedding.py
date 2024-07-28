@@ -1,5 +1,6 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field
+from fastapi import UploadFile, Form
 
 from app.models.constant import EmbeddingModel
 from app.models.schemas import BaseResponse
@@ -12,6 +13,10 @@ class UserQueryEmbeddingRequest(EmbeddingRequest):
 
 class PassageQueryEmbeddingRequest(EmbeddingRequest):
     model: EmbeddingModel = Field(EmbeddingModel.PASSAGE, description="Model name")
+
+class PdfEmbeddingRequest(BaseModel):
+    file: UploadFile = Form(..., description="PDF file")
+    collection: Optional[str] = Form(None, description="Collection name")
 
 class EmbeddingResult(BaseModel):
     object: str = Field(..., description="Object type")

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, UploadFile
+from fastapi import APIRouter, Depends
 
 from app.core.dependencies import validate_pdf_file
 from app.models.schemas import (
@@ -7,6 +7,7 @@ from app.models.schemas import (
     UserQueryEmbeddingRequest,
     PassageQueryEmbeddingRequest,
     EmbeddingResponse,
+    PdfEmbeddingRequest,
 )
 from app.services import EmbeddingService
 from app.services.service_factory import ServiceFactory
@@ -48,7 +49,7 @@ async def embeddings_passage(embedding_request: PassageQueryEmbeddingRequest, em
 
 @router.post("/embeddings/pdf", response_model=BaseResponse, responses={400: {"model": ErrorResponse}})
 async def embeddings_pdf(
-    file: UploadFile = Depends(validate_pdf_file),
+    embedding_request: PdfEmbeddingRequest = Depends(validate_pdf_file),
     embedding_serivce: EmbeddingService = Depends(ServiceFactory.get_embedding_service)
 ) -> BaseResponse:
     """
@@ -61,6 +62,6 @@ async def embeddings_pdf(
         BaseResponse: Embedding response
     """
 
-    await embedding_serivce.pdf_embeddings(file=file)
+    await embedding_serivce.pdf_embeddings(file=embedding_request.file, collection=embedding_request.collection)
 
     return BaseResponse(message="PDF embeddings generated successfully").model_dump()

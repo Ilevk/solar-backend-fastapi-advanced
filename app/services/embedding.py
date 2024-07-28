@@ -7,6 +7,7 @@ from chromadb import Collection, QueryResult
 from app.clients import OpenAIClient, UpstageClient
 from app.models.schemas import EmbeddingResult, LayoutAnalysisResult, EmbeddingContext, EmbeddingContextList
 from app.core.db import get_chrome_client
+from app.core.logger import logger
 
 class EmbeddingService:
 
@@ -30,7 +31,7 @@ class EmbeddingService:
 
         return result
 
-    async def pdf_embeddings(self, file: UploadFile) -> List[EmbeddingResult]:
+    async def pdf_embeddings(self, file: UploadFile, collection: str) -> List[EmbeddingResult]:
         """
         Request embeddings from OpenAI API for PDF file
 
@@ -61,7 +62,13 @@ class EmbeddingService:
 
 
         async with get_chrome_client() as client:
-            collection: Collection = await client.get_collection("embeddings")
+            collection_name = f"embeddings-{collection}" if collection else "embeddings"
+            try:
+                await client.create_collection(name=collection_name)
+            except Exception:
+                logger.info(f"Collection {collection_name} already exists")
+
+            collection: Collection = await client.get_collection(collection_name)
             await collection.add(
                 documents=messages,
                 embeddings=[result.embedding for result in results],

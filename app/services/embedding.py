@@ -93,7 +93,9 @@ class EmbeddingService:
 
         async with get_chrome_client() as client:
             collection: Collection = await client.get_collection("embeddings")
-            result: QueryResult = await collection.query([embedding.embedding for embedding in embeddings])
+            result: QueryResult = await collection.query(
+                query_embeddings=[embedding.embedding for embedding in embeddings],
+                n_results=10)
 
         context = []
         for document in result.get('documents', []):

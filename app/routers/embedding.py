@@ -28,7 +28,7 @@ async def embeddings_query(embedding_request: UserQueryEmbeddingRequest, embeddi
 
     result = await embedding_serivce._embeddings(messages=embedding_request.messages, model=embedding_request.model.value)
 
-    return EmbeddingResponse(data=result).model_dump()
+    return EmbeddingResponse(data=result)
 
 @router.post("/embeddings/passage", response_model=EmbeddingResponse, responses={400: {"model": ErrorResponse}})
 async def embeddings_passage(embedding_request: PassageQueryEmbeddingRequest, embedding_serivce: EmbeddingService = Depends(ServiceFactory.get_embedding_service)) -> EmbeddingResponse:
@@ -44,7 +44,7 @@ async def embeddings_passage(embedding_request: PassageQueryEmbeddingRequest, em
 
     result = await embedding_serivce._embeddings(messages=embedding_request.messages, model=embedding_request.model.value)
 
-    return EmbeddingResponse(data=result).model_dump()
+    return EmbeddingResponse(data=result)
 
 
 @router.post("/embeddings/pdf", response_model=BaseResponse, responses={400: {"model": ErrorResponse}})
@@ -64,4 +64,4 @@ async def embeddings_pdf(
 
     await embedding_serivce.pdf_embeddings(file=embedding_request.file, collection=embedding_request.collection)
 
-    return BaseResponse(message="PDF embeddings generated successfully").model_dump()
+    return BaseResponse(message="PDF embeddings generated successfully")

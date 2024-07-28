@@ -40,4 +40,4 @@ async def chat(
     else:
         response = await chat_service.chat(messages=chat_request.messages, model=chat_request.model.value, contexts=contexts)
 
-        return ChatResponse(data=response).model_dump()
+        return ChatResponse(data=response)

@@ -56,7 +56,7 @@ async def embeddings_pdf(
     Get embeddings from OpenAI API for PDF
 
     Args:
-        file (UploadFile): PDF file to generate embeddings
+        embedding_request (PdfEmbeddingRequest): Input PDF file, Collection Name
 
     Returns:
         BaseResponse: Embedding response

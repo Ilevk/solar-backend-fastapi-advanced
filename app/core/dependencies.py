@@ -11,14 +11,15 @@ async def validate_pdf_file(file: UploadFile = Form(...,  description="PDF file"
     validate file type and extension, only pdf files are allowed
 
     Args:
-        file (UploadFile, optional): PDF file.
+        file (UploadFile): PDF file
+        collection (str, optional): Collection
 
     Raises:
         ValueError: when file type is not application/pdf
         ValueError: when file extension is not pdf
 
     Returns:
-        UploadFile: PDF file
+        PdfEmbeddingRequest: PDF Embed
     """
     if file.content_type != "application/pdf":
         logger.error(f"Invalid file type: {file.content_type}")

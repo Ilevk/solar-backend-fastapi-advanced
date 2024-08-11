@@ -129,9 +129,9 @@ This directory contains the main application code.
 - ### clients
   Contains client classes for interacting with external APIs.
   - `open_ai.py`: Client for interacting with the OpenAI API.
-    - chat, stream_chat.
+    - chat, stream_chat, embedding.
   - `upstage.py`: Client for interacting with the Upstage API.
-    - embedding, layout_anlaysis.
+    - layout_anlaysis.
 
 - ### core
   Contains core functionalities and configurations.
